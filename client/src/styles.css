@@ -1,0 +1,150 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f4f5f7;
+  color: #1a1a1a;
+  line-height: 1.5;
+}
+.shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 0;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.bar .brand {
+  font-size: 18px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #1a1a1a;
+}
+.bar .right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.who {
+  font-size: 14px;
+  color: #555;
+}
+button {
+  font: inherit;
+  padding: 8px 14px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+button:hover {
+  background: #eee;
+}
+button.ghost {
+  background: none;
+  border: none;
+  color: #555;
+}
+button.danger {
+  color: #b00020;
+  border-color: #b00020;
+  background: none;
+}
+button.x {
+  padding: 0 4px;
+  margin-left: 8px;
+  border: none;
+  background: none;
+  color: #999;
+}
+.card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card h2 {
+  margin-top: 0;
+}
+.link {
+  cursor: pointer;
+  color: #1a3c8a;
+}
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.excerpt {
+  color: #333;
+}
+.body {
+  white-space: pre-wrap;
+}
+.meta {
+  color: #777;
+  font-size: 13px;
+}
+.muted {
+  color: #888;
+}
+.error {
+  background: #fdecea;
+  color: #b00020;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+.narrow {
+  max-width: 420px;
+  margin: 0 auto;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+input,
+textarea {
+  font: inherit;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+  resize: vertical;
+}
+.comments {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+}
+.comments li {
+  border-top: 1px solid #eee;
+  padding: 8px 0;
+}
