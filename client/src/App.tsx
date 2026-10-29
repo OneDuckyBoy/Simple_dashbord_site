@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { api, clearToken, getToken, setToken, type Comment, type Post, type User } from './api'
+import { AiChat } from './aiChat/AiChat'
 
 type View = 'feed' | 'post' | 'login' | 'register' | 'new' | 'edit' | 'settings'
 
@@ -205,6 +206,9 @@ export default function App() {
           onCancel={() => setView('feed')}
         />
       )}
+
+      {/* key: друг потребител започва с празен чат */}
+      {user && <AiChat key={user.id} />}
     </div>
   )
 }
