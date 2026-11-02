@@ -49,8 +49,24 @@ npm run dev
 - **Редактирай / Изтрий** — на своя публикация (или всяка, ако си админ).
 - **Коментари** — добавяне и триене под всяка публикация.
 - **🔑 Смяна на парола** — от менюто горе; иска текущата + новата (4+ знака).
+- **Асистент** — AI чатът на ai-automation, долу вдясно, за влезли потребители (виж по-долу).
 
 ---
+
+## AI асистент (ai-automation)
+
+Чатът е изцяло на ai-automation, в iframe. При нас са само три неща:
+
+- `client/index.html`: `<script src="http://localhost:3847/embed.js">`.
+- `client/src/App.tsx`: при вход `AiAutomationChat.mount({ getToken })`, при изход `unmount()`.
+- `server/src/routes/ai-chat.ts`: `POST /api/ai-chat/token` иска с ключа краткотраен токен за
+  влезлия потребител (имейлът е от нашия JWT, никога от заявката).
+
+Настройка: админ в ai-automation създава ключ (**API Keys → API access → Create key**), копирай
+`server/.env.example` като `server/.env`, сложи ключа и рестартирай `npm run dev`.
+
+Имейлът трябва да е на потребител в ai-automation (локално например `roster-admin@local`);
+демо акаунтите тук там ги няма и чатът им отказва.
 
 ## API
 

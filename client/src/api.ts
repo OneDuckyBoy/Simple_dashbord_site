@@ -70,4 +70,6 @@ export const api = {
   addComment: (postId: number, body: string) =>
     request<Comment>(`/comments/post/${postId}`, 'POST', { body }),
   deleteComment: (id: number) => request<{ deleted: boolean }>(`/comments/${id}`, 'DELETE'),
+
+  aiChatToken: () => request<{ token: string; expiresAt: string }>('/ai-chat/token', 'POST'),
 }

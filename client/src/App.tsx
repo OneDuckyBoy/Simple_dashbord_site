@@ -35,6 +35,13 @@ export default function App() {
     Promise.all([refreshPosts(), loadMe()]).finally(() => setLoading(false))
   }, [refreshPosts, loadMe])
 
+  // AI чатът: само за влезли, с токен от нашия сървър
+  useEffect(() => {
+    if (!user) return
+    window.AiAutomationChat?.mount({ getToken: async () => (await api.aiChatToken()).token })
+    return () => window.AiAutomationChat?.unmount()
+  }, [user])
+
   async function openPost(id: number) {
     setError('')
     setView('post')
@@ -134,82 +141,82 @@ export default function App() {
   }
 
   return (
-    <div className="shell">
-      <nav className="bar">
-        <button className="brand" onClick={() => setView('feed')}>
-          ✍️ Простичък блог
-        </button>
-        <div className="right">
-          {user ? (
-            <>
-              <span className="who">👋 {user.username}</span>
-              <button onClick={() => setView('settings')}>🔑 Смяна на парола</button>
-              <button onClick={() => setView('new')}>+ Нова публикация</button>
-              <button onClick={logout}>Изход</button>
-            </>
-          ) : (
-            <>
-              <button onClick={() => setView('login')}>Вход</button>
-              <button onClick={() => setView('register')}>Регистрация</button>
-            </>
-          )}
-        </div>
-      </nav>
+      <div className="shell">
+        <nav className="bar">
+          <button className="brand" onClick={() => setView('feed')}>
+            ✍️ Простичък блог
+          </button>
+          <div className="right">
+            {user ? (
+                <>
+                  <span className="who">👋 {user.username}</span>
+                  <button onClick={() => setView('settings')}>🔑 Смяна на парола</button>
+                  <button onClick={() => setView('new')}>+ Нова публикация</button>
+                  <button onClick={logout}>Изход</button>
+                </>
+            ) : (
+                <>
+                  <button onClick={() => setView('login')}>Вход</button>
+                  <button onClick={() => setView('register')}>Регистрация</button>
+                </>
+            )}
+          </div>
+        </nav>
 
-      {error && <div className="error">{error}</div>}
-      {loading && <p className="muted">Зареждане…</p>}
+        {error && <div className="error">{error}</div>}
+        {loading && <p className="muted">Зареждане…</p>}
 
-      {!loading && view === 'feed' && (
-        <FeedView
-          posts={posts}
-          onOpen={openPost}
-          onDelete={onDelete}
-          isOwner={(id) => user?.id === id || user?.role === 'admin'}
-        />
-      )}
+        {!loading && view === 'feed' && (
+            <FeedView
+                posts={posts}
+                onOpen={openPost}
+                onDelete={onDelete}
+                isOwner={(id) => user?.id === id || user?.role === 'admin'}
+            />
+        )}
 
-      {view === 'post' && current && (
-        <PostView
-          post={current}
-          comments={comments}
-          isOwner={user?.id === (current as any).user_id || user?.role === 'admin'}
-          onBack={() => setView('feed')}
-          onEdit={() => setView('edit')}
-          onDelete={() => onDelete(current.id)}
-          onComment={onComment}
-          onDeleteComment={onDeleteComment}
-        />
-      )}
+        {view === 'post' && current && (
+            <PostView
+                post={current}
+                comments={comments}
+                isOwner={user?.id === (current as any).user_id || user?.role === 'admin'}
+                onBack={() => setView('feed')}
+                onEdit={() => setView('edit')}
+                onDelete={() => onDelete(current.id)}
+                onComment={onComment}
+                onDeleteComment={onDeleteComment}
+            />
+        )}
 
-      {view === 'login' && (
-        <AuthForm mode="login" onDone={onLogin} />
-      )}
-      {view === 'register' && (
-        <AuthForm mode="register" onDone={onRegister} />
-      )}
+        {view === 'login' && (
+            <AuthForm mode="login" onDone={onLogin}/>
+        )}
+        {view === 'register' && (
+            <AuthForm mode="register" onDone={onRegister}/>
+        )}
 
-      {view === 'new' && (
-        <PostForm onSave={onSave} onCancel={() => setView('feed')} />
-      )}
-      {view === 'edit' && current && (
-        <PostForm
-          existing={current}
-          onSave={(t, b) => onSave(t, b, current)}
-          onCancel={() => setView('post')}
-        />
-      )}
+        {view === 'new' && (
+            <PostForm onSave={onSave} onCancel={() => setView('feed')}/>
+        )}
+        {view === 'edit' && current && (
+            <PostForm
+                existing={current}
+                onSave={(t, b) => onSave(t, b, current)}
+                onCancel={() => setView('post')}
+            />
+        )}
 
-      {view === 'settings' && (
-        <ChangePassword
-          onDone={onChangePassword}
-          onCancel={() => setView('feed')}
-        />
-      )}
-    </div>
+        {view === 'settings' && (
+            <ChangePassword
+                onDone={onChangePassword}
+                onCancel={() => setView('feed')}
+            />
+        )}
+      </div>
   )
 }
 
-function FeedView({ posts, onOpen, onDelete, isOwner }: {
+function FeedView({posts, onOpen, onDelete, isOwner}: {
   posts: Post[]
   onOpen: (id: number) => void
   onDelete: (id: number) => void
@@ -217,8 +224,8 @@ function FeedView({ posts, onOpen, onDelete, isOwner }: {
 }) {
   if (posts.length === 0) return <p className="muted">Все още няма публикации.</p>
   return (
-    <div className="feed">
-      {posts.map((p) => (
+      <div className="feed">
+        {posts.map((p) => (
         <article className="card" key={p.id}>
           <h2 onClick={() => onOpen(p.id)} className="link">
             {p.title}

@@ -4,6 +4,7 @@ import 'dotenv/config'
 import { authRouter } from './routes/auth.js'
 import { postsRouter } from './routes/posts.js'
 import { commentsRouter } from './routes/comments.js'
+import { aiChatRouter } from './routes/ai-chat.js'
 
 const app = express()
 const PORT = Number(process.env.PORT || 3001)
@@ -16,6 +17,7 @@ app.get('/health', (_req, res) => res.json({ ok: true, ts: Date.now() }))
 app.use('/api/auth', authRouter)
 app.use('/api/posts', postsRouter)
 app.use('/api/comments', commentsRouter)
+app.use('/api/ai-chat', aiChatRouter)
 
 // грешки: валидиране на JSON / невладени грешки
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }))
