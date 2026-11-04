@@ -57,13 +57,15 @@ npm run dev
 
 Чатът е изцяло на ai-automation, в iframe. При нас са само три неща:
 
-- `client/index.html`: `<script src="http://localhost:3847/embed.js">`.
+- `client/index.html`: `<script src="%VITE_AI_CHAT_URL%/embed.js">` (адресът идва от `client/.env`).
 - `client/src/App.tsx`: при вход `AiAutomationChat.mount({ getToken })`, при изход `unmount()`.
 - `server/src/routes/ai-chat.ts`: `POST /api/ai-chat/token` иска с ключа краткотраен токен за
   влезлия потребител (имейлът е от нашия JWT, никога от заявката).
 
 Настройка: админ в ai-automation създава ключ (**API Keys → API access → Create key**), копирай
-`server/.env.example` като `server/.env`, сложи ключа и рестартирай `npm run dev`.
+`server/.env.example` като `server/.env` (адрес + ключ) и `client/.env.example` като `client/.env`
+(същият адрес), после рестартирай `npm run dev`. Локално адресът е `http://localhost:3847`, на
+dev `https://dev.ai-automation.orbisds.com`.
 
 Имейлът трябва да е на потребител в ai-automation (локално например `roster-admin@local`);
 демо акаунтите тук там ги няма и чатът им отказва.
